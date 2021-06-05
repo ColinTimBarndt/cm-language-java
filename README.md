@@ -7,3 +7,8 @@ This plugin is based on the [`@codemirror/lang-java`] plugin.
 
 [CodeMirror 6]: https://github.com/codemirror/codemirror.next/
 [`@codemirror/lang-java`]: https://github.com/codemirror/lang-java/
+
+## Notice
+
+This plugin is in development. If you wish to contribute, feel free to
+do so.
