@@ -1,6 +1,7 @@
 import typescript from "@rollup/plugin-typescript";
 import { nodeResolve } from "@rollup/plugin-node-resolve";
 import dts from "rollup-plugin-dts";
+import { terser } from "rollup-plugin-terser";
 
 export default [
 	{
@@ -8,31 +9,30 @@ export default [
 		output: [
 			{
 				file: "dist/index.js",
-				format: "es"
+				format: "es",
 			},
 			{
 				file: "dist/index.cjs",
-				format: "cjs"
-			}
+				format: "cjs",
+			},
 		],
 		external: [
-			/node_modules/
+			/node_modules/,
 		],
 		plugins: [
 			typescript(),
-			nodeResolve()
-		]
+			nodeResolve(),
+			terser(),
+		],
 	},
 	{
 		input: "src/index.ts",
-		output: [
-			{
-				file: "dist/index.d.ts",
-				format: "es"
-			}
-		],
+		output: {
+			file: "dist/index.d.ts",
+			format: "es"
+		},
 		plugins: [
-			dts()
-		]
-	}
+			dts(),
+		],
+	},
 ]
