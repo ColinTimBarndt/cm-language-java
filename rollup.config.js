@@ -2,6 +2,8 @@ import typescript from "@rollup/plugin-typescript";
 import { nodeResolve } from "@rollup/plugin-node-resolve";
 import dts from "rollup-plugin-dts";
 import { terser } from "rollup-plugin-terser";
+import strip from "@rollup/plugin-strip";
+import npmpkg from "./package.json";
 
 export default [
 	{
@@ -16,13 +18,14 @@ export default [
 				format: "cjs",
 			},
 		],
-		external: [
-			/node_modules/,
-		],
+		external: Object.keys(npmpkg.dependencies),
 		plugins: [
-			typescript(),
+			strip({
+				include: "**/*.ts",
+			}),
 			nodeResolve(),
-			terser(),
+			typescript(),
+			terser()
 		],
 	},
 	{
@@ -35,4 +38,4 @@ export default [
 			dts(),
 		],
 	},
-]
+];

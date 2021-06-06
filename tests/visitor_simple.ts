@@ -24,7 +24,21 @@ visitor.visitDeclarations<string>({
 			}),
 		}),
 		name: logValue("name"),
-		body: logVisit("body"),
+		body: visitor.visitClassBody({
+			field: logVisit("field"),
+			method: visitor.visitMethod({
+				methodModifiers: visitor.visitModifiers({
+					modifier: (m) => console.log("modifier:", m),
+					annotation: visitor.visitAnnotation({
+						name: logValue("method annotation name"),
+						arguments: logVisit("method annotation args"),
+					}),
+				}),
+				name: logValue("method name"),
+				returnType: logValue("returns"),
+			}),
+			classConstructor: logValue("constructor"),
+		}),
 	}),
 	$error: (err) => console.log("error:", err),
 })(parsed.cursor(0), errs);
