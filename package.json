@@ -10,7 +10,7 @@
   "scripts": {
     "prepare": "rollup -c",
     "pretest": "rollup -c rollup.config.test.js",
-    "test": "node --require source-map-support/register --enable-source-maps --trace-uncaught tests/dist/tests.cjs",
+    "test": "node --enable-source-maps --trace-uncaught tests/dist/tests.cjs",
     "doc": "typedoc src/index.ts"
   },
   "repository": {
