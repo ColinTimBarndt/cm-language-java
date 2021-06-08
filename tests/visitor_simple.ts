@@ -1,6 +1,6 @@
 import { javaLanguage } from "@codemirror/lang-java";
 import { Tree, TreeCursor } from "lezer";
-import * as visitor from "../src/visit/visitor";
+import { traverser as traverser } from "../src/index";
 //@ts-ignore
 import code from "./Simple.java";
 
@@ -12,24 +12,23 @@ const logValue = (prefix: string) => (cursor: TreeCursor) =>
 	console.log(prefix + ": " + code.substring(cursor.from, cursor.to));
 
 
-let errs: string[] = [];
-visitor.visitDeclarations<string>({
+traverser.traverseDeclarations<void>({
 	package: logVisit("package"),
-	class: visitor.visitClass({
-		modifiers: visitor.visitModifiers({
+	class: traverser.traverseClass({
+		modifiers: traverser.traverseModifiers({
 			modifier: (m) => console.log("modifier:", m),
-			annotation: visitor.visitAnnotation({
+			annotation: traverser.traverseAnnotation({
 				name: logValue("annotation name"),
 				arguments: logVisit("annotation args"),
 			}),
 		}),
 		name: logValue("name"),
-		body: visitor.visitClassBody({
+		body: traverser.traverseClassBody({
 			field: logVisit("field"),
-			method: visitor.visitMethod({
-				methodModifiers: visitor.visitModifiers({
+			method: traverser.traverseMethod({
+				methodModifiers: traverser.traverseModifiers({
 					modifier: (m) => console.log("modifier:", m),
-					annotation: visitor.visitAnnotation({
+					annotation: traverser.traverseAnnotation({
 						name: logValue("method annotation name"),
 						arguments: logVisit("method annotation args"),
 					}),
@@ -41,4 +40,4 @@ visitor.visitDeclarations<string>({
 		}),
 	}),
 	$error: (err) => console.log("error:", err),
-})(parsed.cursor(0), errs);
+})(parsed.cursor(0));

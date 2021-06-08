@@ -7,9 +7,40 @@ import { javaLanguage } from "@codemirror/lang-java";
 export { javaLanguage } from "@codemirror/lang-java";
 
 /**
- * Helpers for traversing a lezer syntax tree.
+ * Traversers are an approach of traversing a syntax tree. The functions provided
+ * by this namespace can be used to scan a java-lezer tree.
+ * 
+ * @example
+ * ```java
+ * @TestAnnotation
+ * public class Test {
+ *   //
+ * }
+ * ```
+ * 
+ * ```ts
+ * // Traverses all modifiers of a class in a `.java` file.
+ * 
+ * traverser.traverseDeclarations<void>({
+ *   class: traverser.traverseClass(
+ *     modifiers: traverser.traverseModifiers({
+ *       modifier: mod => console.log("Modifier: " + mod),
+ *       annotation: traverser.traverseAnnotation({
+ *         name: ({from, to}) => {
+ *           console.log("Annotation: " + code.substring(from, to));
+ *         },
+ *       }),
+ *     }),
+ *   ),
+ * })(code);
+ * ```
  */
-export * as visitor from "./visit/visitor";
+export * as traverser from "./traverse/traverser";
+
+/**
+ * Functionality for outlining a Java file.
+ */
+export * as outliner from "./outline/outliner";
 
 /**
  * Creates a new extension for java language support.
