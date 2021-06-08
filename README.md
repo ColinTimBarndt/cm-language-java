@@ -1,14 +1,108 @@
 # cm-language-java
 
+[![CodeMirror 6](https://img.shields.io/badge/CodeMirror-6-informational?logo=CodeMirror)](https://codemirror.net/6/)
+![Under development](https://img.shields.io/badge/Status-under%20development-important)
+
 This [CodeMirror 6] plugin adds support for the Java programming language,
 including linting, autocomplete and syntax highlighting.
 
 This plugin is based on the [`@codemirror/lang-java`] plugin.
 
-[CodeMirror 6]: https://github.com/codemirror/codemirror.next/
+[CodeMirror 6]: https://codemirror.net/6/
 [`@codemirror/lang-java`]: https://github.com/codemirror/lang-java/
 
 ## Notice
 
-This plugin is in development. If you wish to contribute, feel free to
-do so.
+This plugin is under development. Breaking changes will happen. Contributions
+are welcome.
+
+## Todo
+
+### Traverse
+
+* [ ] Program
+  * [x] (for a one-class-per-file structure)
+* [ ] PackageDeclaration
+* [ ] ImportDeclaration
+* [x] ClassDeclaration
+  * [x] ClassBody
+* [ ] EnumDeclaration
+  * [ ] EnumBody
+  * [ ] EnumBodyDeclarations
+  * [ ] EnumConstant
+* [ ] AnnotationTypeDeclaration
+  * [ ] AnnotationTypeBody
+  * [ ] AnnotationTypeElementDeclaration
+* [ ] ModuleDeclaration
+  * [ ] ModuleBody
+  * [ ] ModuleDirective
+* [ ] ConstructorDeclaration
+  * [ ] ConstructorBody
+* [x] MethodDeclaration
+* [ ] InterfaceTypeList
+* [x] Modifiers
+  * [x] annotation
+  * [ ] AnnotationArgumentList
+  * [ ] ElementValuePair
+* [ ] type
+  * [ ] simpleType
+  * [ ] unannotatedType
+  * [ ] TypeArguments
+  * [ ] TypeBound
+  * [ ] TypeParameters
+    * [ ] TypeParameter
+  * [ ] Wildcard
+  * [ ] ArrayType
+* [ ] ArrayInitializer
+  * [ ] Dimension
+* [x] Block
+  * [ ] ExpressionStatement
+  * [ ] LabeledStatement
+  * [ ] IfStatement
+  * [ ] WhileStatement
+  * [ ] ForStatement
+  * [ ] EnhancedForStatement
+  * [ ] AssertStatement
+  * [ ] SwitchStatement
+    * [ ] SwitchBlock
+    * [ ] SwitchLabel
+  * [ ] DoStatement
+  * [x] BreakStatement
+  * [x] ContinueStatement
+  * [x] ReturnStatement
+  * [ ] SynchronizedStatement
+  * [ ] LocalVariableDeclaration
+  * [x] ThrowStatement
+  * [ ] TryStatement
+    * [ ] CatchClause
+    * [ ] FinallyClause
+  * [ ] TryWithResourcesStatement
+* [ ] expression
+  * [ ] AssignmentExpression
+  * [ ] BinaryExpression
+  * [ ] InstanceofExpression
+  * [ ] LambdaExpression
+  * [ ] TernaryExpression
+  * [ ] UpdateExpression
+  * [ ] baseExpression
+  * [ ] UnaryExpression
+  * [ ] CastExpression
+  * [ ] baseExpression
+    * [ ] literal
+    * [ ] ClassLiteral
+    * [ ] "this"
+    * [ ] Identifier
+    * [ ] ParenthesizedExpression
+    * [ ] ObjectCreationExpression
+    * [ ] FieldAccess
+    * [ ] ArrayAccess
+    * [ ] MethodInvocation
+    * [ ] MethodReference
+    * [ ] ArrayCreationExpression
+* [ ] literal
+  * [ ] IntegerLiteral
+  * [ ] FloatingPointLiteral
+  * [ ] BooleanLiteral
+  * [ ] CharacterLiteral
+  * [ ] StringLiteral
+  * [ ] "null"
