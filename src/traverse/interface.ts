@@ -1,4 +1,4 @@
-import { Traverser, TraverserFunction, TraverserError, syntaxError, UnexpectedNodeError, InlineTraverserFunction, syntaxErrorInline } from "./helpers";
+import { Traverser, TraverserFunction, TraverserError, syntaxError, UnexpectedNodeError, InlineTraverserFunction } from "./helpers";
 import * as assert from "../assert";
 
 /**
@@ -23,7 +23,7 @@ export interface InterfaceTraverser<D> extends Traverser<TraverserError.SyntaxEr
 	 * Which interfaces are extended.
 	 * @see {@link traverseTypeList}
 	 */
-	extends?: TraverserFunction<D>;
+	extends?: InlineTraverserFunction<D>;
 	/**
 	 * Interface body.
 	 * @see {@link traverseInterfaceBody}
@@ -54,9 +54,14 @@ export const traverseInterface: <D>(traverser: InterfaceTraverser<D>) => Travers
 				traverser.typeParameters?.(cursor, data);
 				continue;
 			case "ExtendsInterfaces":
-				cursor.lastChild();
-				traverser.extends?.(cursor, data);
-				cursor.parent();
+				if (traverser.extends) {
+					cursor.lastChild(); // Enter ExtendsInterfaces
+					cursor.firstChild(); // Enter InterfaceTypeList
+					const err = traverser.extends(cursor, data);
+					cursor.parent();
+					cursor.parent();
+					if (err) return;
+				}
 				continue;
 			case "InterfaceBody":
 				traverser.body?.(cursor, data);
