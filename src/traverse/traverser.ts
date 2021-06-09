@@ -8,6 +8,7 @@ export * from "./method";
 export * from "./instructions";
 export * from "./variable";
 export * from "./type";
+export * from "./import";
 
 // https://github.com/lezer-parser/java
 

@@ -23,7 +23,7 @@ are welcome.
 * [ ] Program
   * [x] (for a one-class-per-file structure)
 * [ ] PackageDeclaration
-* [ ] ImportDeclaration
+* [x] ImportDeclaration
 * [x] ClassDeclaration
   * [x] ClassBody
 * [x] InterfaceDeclaration
