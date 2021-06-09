@@ -1,5 +1,7 @@
 package tests;
 
+import java.lang.String;
+
 @Deprecated(since = "9")
 public class Simple {
 	private static final String HELLO = "Hello, world!";

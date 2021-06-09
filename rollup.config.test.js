@@ -2,6 +2,7 @@ import typescript from "@rollup/plugin-typescript";
 import { nodeResolve } from "@rollup/plugin-node-resolve";
 import { string } from "rollup-plugin-string";
 import { readdir } from "fs";
+import multi from '@rollup/plugin-multi-entry';
 
 export default new Promise((resolve, reject) => {
 	readdir("tests", {}, (err, files) => {
@@ -18,6 +19,7 @@ export default new Promise((resolve, reject) => {
 						sourcemap: true,
 					},
 				],
+				inlineDynamicImports: true,
 				external: [
 					/node_modules/,
 				],
@@ -27,6 +29,7 @@ export default new Promise((resolve, reject) => {
 					}),
 					typescript(),
 					nodeResolve(),
+					multi(),
 				],
 			},
 		]);

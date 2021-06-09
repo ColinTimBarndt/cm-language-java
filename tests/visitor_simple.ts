@@ -14,6 +14,12 @@ const logValue = (prefix: string) => (cursor: TreeCursor) =>
 
 traverser.traverseDeclarations<void>({
 	package: logVisit("package"),
+	import: traverser.traverseImport({
+		name: traverser.traverseName({
+			identifier: logValue("import.identifier"),
+			path: logValue("import.path"),
+		}),
+	}),
 	class: traverser.traverseClass({
 		modifiers: traverser.traverseModifiers({
 			modifier: (m) => console.log("modifier:", m),
