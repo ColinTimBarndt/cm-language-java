@@ -1,8 +1,7 @@
 import { SyntaxNode, TreeCursor } from "lezer";
 
 /**
- * A function that traverses a lezer-java syntax tree.
- * Errors can be pushed onto the array.
+ * A function that traverses a lezer-java syntax tree node.
  * @typeparam D Data type
  */
 export type TraverserFunction<D> = (
@@ -30,6 +29,28 @@ export type ConsumerFunction<T, D> = (
 	 */
 	data: D
 ) => void;
+
+/**
+ * A function that traverses a lezer-java syntax tree node **inline**.
+ * @remarks
+ * If this traverser may parse multiple nodes (eg. a list), it must always move
+ * the cursor by the same number of nodes for the same input, whether the
+ * traverser object has a function set to handle the node or not.
+ * The traverser function must end with the cursor set on the last node that was
+ * traversed by it.
+ * @typeparam D Data type
+ * @returns `true` if a syntax error was encountered
+ */
+export type InlineTraverserFunction<D> = (
+	/**
+	 * Lezer TreeCursor to use
+	 */
+	cursor: TreeCursor,
+	/**
+	 * Data that can be manipulated by traverse functions
+	 */
+	data: D
+) => boolean;
 
 /**
  * A function that is called with a `VisitError` if a traverser function
@@ -89,10 +110,29 @@ export enum TraverserError {
  * @typeparam D Data type
  * @returns Whether the current node was an error
  */
-export function syntaxError<D>(traverser: Traverser<TraverserError.SyntaxError, D>, cursor: TreeCursor, data: D): boolean {
+export const syntaxError = <D>(traverser: Traverser<TraverserError.SyntaxError, D>, cursor: TreeCursor, data: D) => {
 	if (cursor.node.type.isError) {
 		traverser.$error?.(TraverserError.SyntaxError, cursor, data);
 		cursor.parent();
+		return true;
+	}
+	return false;
+}
+
+/**
+ * Runs the `$error` method of the traverser if the current node is an error.
+ * Otherwise returns `false`.
+ * 
+ * This is a helper function for traversers.
+ * @param traverser Traverser to use
+ * @param cursor Lezer TreeCursor to use
+ * @param data Data that can be manipulated by traverse functions
+ * @typeparam D Data type
+ * @returns Whether the current node was an error
+ */
+export const syntaxErrorInline = <D>(traverser: Traverser<TraverserError.SyntaxError, D>, cursor: TreeCursor, data: D) => {
+	if (cursor.node.type.isError) {
+		traverser.$error?.(TraverserError.SyntaxError, cursor, data);
 		return true;
 	}
 	return false;

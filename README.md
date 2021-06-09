@@ -39,14 +39,14 @@ are welcome.
 * [ ] ConstructorDeclaration
   * [ ] ConstructorBody
 * [x] MethodDeclaration
-* [ ] InterfaceTypeList
+* [x] InterfaceTypeList
 * [x] Modifiers
   * [x] annotation
   * [ ] AnnotationArgumentList
   * [ ] ElementValuePair
-* [ ] type
-  * [ ] simpleType
-  * [ ] unannotatedType
+* [x] type
+  * [x] simpleType
+  * [x] unannotatedType
   * [ ] TypeArguments
   * [ ] TypeBound
   * [ ] TypeParameters

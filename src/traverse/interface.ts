@@ -1,9 +1,8 @@
-import { Traverser, TraverserFunction, TraverserError, syntaxError, UnexpectedNodeError } from "./helpers";
+import { Traverser, TraverserFunction, TraverserError, syntaxError, UnexpectedNodeError, InlineTraverserFunction, syntaxErrorInline } from "./helpers";
 import * as assert from "../assert";
 
 /**
  * Interface for accepting lezer-nodes when using {@link traverseInterface}.
- * @todo
  */
 export interface InterfaceTraverser<D> extends Traverser<TraverserError.SyntaxError, D> {
 	/**
@@ -22,7 +21,7 @@ export interface InterfaceTraverser<D> extends Traverser<TraverserError.SyntaxEr
 	typeParameters?: TraverserFunction<D>;
 	/**
 	 * Which interfaces are extended.
-	 * @see {@link traverseInterfaceTypeList}
+	 * @see {@link traverseTypeList}
 	 */
 	extends?: TraverserFunction<D>;
 	/**
@@ -33,7 +32,6 @@ export interface InterfaceTraverser<D> extends Traverser<TraverserError.SyntaxEr
 }
 /**
  * Traverses an interface declaration.
- * @todo
  * @see [java.grammar](https://github.com/lezer-parser/java/blob/c0d12732696efad0d65668cf925a0aa2c61a31fa/src/java.grammar#L501)
  * @param traverser Used traverser
  * @typeparam D Data type
@@ -151,4 +149,4 @@ export const traverseInterfaceBody: <D>(traverser: InterfaceBodyTraverser<D>) =>
 		assert.unreachable();
 	}
 	cursor.parent();
-}
+};
