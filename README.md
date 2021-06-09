@@ -26,6 +26,8 @@ are welcome.
 * [ ] ImportDeclaration
 * [x] ClassDeclaration
   * [x] ClassBody
+* [x] InterfaceDeclaration
+  * [x] InterfaceBody
 * [ ] EnumDeclaration
   * [ ] EnumBody
   * [ ] EnumBodyDeclarations
