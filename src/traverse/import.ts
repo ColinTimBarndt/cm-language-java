@@ -12,7 +12,7 @@ export interface ImportTraverser<D> extends Traverser<TraverserError.SyntaxError
 	static?: ConsumerFunction<void, D>;
 	/**
 	 * Identifier of the import.
-	 * @see {@link traverseIdentifier}
+	 * @see {@link traverseName}
 	 */
 	name?: TraverserFunction<D>;
 	/**
@@ -27,7 +27,7 @@ export interface ImportTraverser<D> extends Traverser<TraverserError.SyntaxError
  * @typeparam D Data type
  * @returns A callable traverser function
  */
-export const traverseInterface: <D>(traverser: ImportTraverser<D>) => TraverserFunction<D> = traverser => (cursor, data) => {
+export const traverseImport: <D>(traverser: ImportTraverser<D>) => TraverserFunction<D> = traverser => (cursor, data) => {
 	assert.equals(cursor.node.name, "ImportDeclaration", () => "Unexpected node: " + cursor.node.name);
 	cursor.firstChild();
 	do {
