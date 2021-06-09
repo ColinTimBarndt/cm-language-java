@@ -78,7 +78,7 @@ export interface VariableDeclaratorTraverser<D> extends Traverser<TraverserError
 	dimension?: TraverserFunction<D>;
 	/**
 	 * Initializer of this variable.
-	 * @see {@link traverseDimension}
+	 * @see {@link traverseVariableInitializer}
 	 */
 	initializer?: TraverserFunction<D>;
 	/**
@@ -93,24 +93,28 @@ export interface VariableDeclaratorTraverser<D> extends Traverser<TraverserError
  * @typeparam D Data type
  * @returns A callable traverser function
  */
-export const traverseVariableDeclarator: <D>(traverser: FieldTraverser<D>) => TraverserFunction<D> = traverser => (cursor, data) => {
-	assert.equals(cursor.node.name, "FieldDeclaration", () => "Unexpected node: " + cursor.node.name);
+export const traverseVariableDeclarator: <D>(traverser: VariableDeclaratorTraverser<D>) => TraverserFunction<D> = traverser => (cursor, data) => {
+	assert.equals(cursor.node.name, "VariableDeclarator", () => "Unexpected node: " + cursor.node.name);
 	cursor.firstChild();
 	if (syntaxError(traverser, cursor, data)) return;
 
-	if (cursor.node.name === "Modifiers") {
-		traverser.modifiers?.(cursor, data);
-		cursor.nextSibling();
+	traverser.name?.(cursor, data);
+	
+	if (cursor.nextSibling()) {
+			if (traverser.dimension)
+			while (cursor.node.name === "Dimension") {
+				traverser.dimension(cursor, data);
+				if (!cursor.nextSibling()) break;
+			}
+		else while (cursor.node.name === "Dimension" && cursor.nextSibling());
 		if (syntaxError(traverser, cursor, data)) return;
+
+		if (traverser.initializer && cursor.node.name === "=") {
+			cursor.nextSibling();
+			if (syntaxError(traverser, cursor, data)) return;
+			traverser.initializer(cursor, data);
+		}
 	}
-
-	traverser.type?.(cursor, data);
-
-	cursor.nextSibling();
-	do {
-		if (syntaxError(traverser, cursor, data)) return;
-		traverser.declarator?.(cursor, data);
-	} while (cursor.nextSibling() && cursor.node.name !== ";")
 
 	cursor.parent();
 }

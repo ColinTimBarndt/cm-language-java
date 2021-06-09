@@ -24,6 +24,9 @@ are welcome.
   * [x] (for a one-class-per-file structure)
 * [ ] PackageDeclaration
 * [x] ImportDeclaration
+  * [ ] name
+    * [ ] Identifier
+    * [ ] ScopedIdentifier
 * [x] ClassDeclaration
   * [x] ClassBody
 * [x] InterfaceDeclaration
@@ -41,6 +44,7 @@ are welcome.
 * [ ] ConstructorDeclaration
   * [ ] ConstructorBody
 * [x] MethodDeclaration
+* [x] FieldDeclaration / ConstantDeclaration
 * [x] InterfaceTypeList
 * [x] Modifiers
   * [x] annotation
@@ -74,6 +78,7 @@ are welcome.
   * [x] ReturnStatement
   * [ ] SynchronizedStatement
   * [ ] LocalVariableDeclaration
+    * [ ] VariableInitializer
   * [x] ThrowStatement
   * [ ] TryStatement
     * [ ] CatchClause
