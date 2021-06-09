@@ -6,6 +6,7 @@ import { Traverser, TraverserFunction, TraverserError, UnexpectedNodeError } fro
 export interface AnnotationTraverser<D> extends Traverser<TraverserError.SyntaxError, D> {
 	/**
 	 * The annotation name.
+	 * @see {@link traverseName}
 	 */
 	name?: TraverserFunction<D>;
 	/**

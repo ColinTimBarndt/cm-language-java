@@ -24,9 +24,9 @@ are welcome.
   * [x] (for a one-class-per-file structure)
 * [ ] PackageDeclaration
 * [x] ImportDeclaration
-  * [ ] name
-    * [ ] Identifier
-    * [ ] ScopedIdentifier
+  * [x] name
+    * [x] Identifier
+    * [x] ScopedIdentifier
 * [x] ClassDeclaration
   * [x] ClassBody
 * [x] InterfaceDeclaration
