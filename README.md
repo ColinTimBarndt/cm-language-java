@@ -78,7 +78,7 @@ are welcome.
   * [x] ContinueStatement
   * [x] ReturnStatement
   * [ ] SynchronizedStatement
-  * [ ] LocalVariableDeclaration
+  * [x] LocalVariableDeclaration
     * [ ] VariableInitializer
   * [x] ThrowStatement
   * [ ] TryStatement

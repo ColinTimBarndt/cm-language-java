@@ -4,7 +4,7 @@ import * as assert from "../assert";
 /**
  * Interface for accepting lezer-nodes when using {@link traverseField}.
  */
-export interface FieldTraverser<D> extends Traverser<TraverserError.SyntaxError, D> {
+export interface VariableTraverser<D> extends Traverser<TraverserError.SyntaxError, D> {
 	/**
 	 * Modifiers for this declaration.
 	 * @see {@link traverseModifiers}
@@ -28,8 +28,8 @@ export interface FieldTraverser<D> extends Traverser<TraverserError.SyntaxError,
  * @typeparam D Data type
  * @returns A callable traverser function
  */
-export const traverseField: <D>(traverser: FieldTraverser<D>) => TraverserFunction<D> = traverser => (cursor, data) => {
-	assert.equals(cursor.node.name, "FieldDeclaration", () => "Unexpected node: " + cursor.node.name);
+export const traverseField: <D>(traverser: VariableTraverser<D>) => TraverserFunction<D> = traverser => (cursor, data) => {
+	//assert.equals(cursor.node.name, "FieldDeclaration", () => "Unexpected node: " + cursor.node.name);
 	cursor.firstChild();
 	if (syntaxError(traverser, cursor, data)) return;
 
@@ -49,7 +49,10 @@ export const traverseField: <D>(traverser: FieldTraverser<D>) => TraverserFuncti
 
 	cursor.parent();
 }
+/** Alias for {@link traverseField} */
 export const traverseConstant = traverseField;
+/** Alias for {@link traverseField} */
+export const traverseLocalVariable = traverseField;
 
 /**
  * Interface for accepting lezer-nodes when using {@link traverseVariableDeclarator}.
