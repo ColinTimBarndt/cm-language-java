@@ -36,8 +36,8 @@ export class Outline {
 		[name: string]: Field;
 	} = {};
 	public visibility: Visibility = "package";
-	public static!: boolean;
-	public final!: boolean;
+	public static_!: boolean;
+	public final_!: boolean;
 	public deprecated!: boolean;
 	
 	/**
@@ -57,8 +57,8 @@ export class Outline {
 		let type: Type | null = null;
 		this.name = null;
 		this.visibility = "package";
-		this.final = false;
-		this.static = false;
+		this.final_ = false;
+		this.static_ = false;
 		this.deprecated = false;
 		let fieldIdx = 0;
 
@@ -70,10 +70,10 @@ export class Outline {
 					this.visibility = mod;
 					return;
 				case "final":
-					this.final = true;
+					this.final_ = true;
 					return;
 				case "static":
-					this.static = true;
+					this.static_ = true;
 					return;
 			}
 		};
