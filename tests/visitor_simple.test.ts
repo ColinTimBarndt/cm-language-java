@@ -1,7 +1,6 @@
 import { javaLanguage } from "@codemirror/lang-java";
 import { Tree, TreeCursor } from "lezer";
 import { traverser as traverser } from "../src/index";
-//@ts-ignore
 import code from "./Simple.java";
 
 const parsed: Tree = javaLanguage.parseString(code);
