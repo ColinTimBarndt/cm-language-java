@@ -53,14 +53,15 @@ are welcome.
 * [x] type
   * [x] simpleType
   * [x] unannotatedType
+  * [ ] TypeName
   * [ ] TypeArguments
   * [ ] TypeBound
   * [ ] TypeParameters
     * [ ] TypeParameter
   * [ ] Wildcard
-  * [ ] ArrayType
+  * [x] ArrayType
+    * [x] Dimension
 * [ ] ArrayInitializer
-  * [ ] Dimension
 * [x] Block
   * [ ] ExpressionStatement
   * [ ] LabeledStatement

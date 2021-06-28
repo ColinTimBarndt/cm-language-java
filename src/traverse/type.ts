@@ -46,11 +46,33 @@ export const traverseType: <D>(traverser: TypeTraverser<D>) => InlineTraverserFu
  * Interface for accepting lezer-nodes when using {@link traverseUnannotatedType}.
  */
 export interface UnannotatedTypeTraverser<D> extends Traverser<TraverserError.SyntaxError, D> {
+	/**
+	 * If this is a primitive type.
+	 */
 	primitive?: ConsumerFunction<PrimitiveType, D>;
+	/**
+	 * If this is a void type.
+	 */
 	void?: ConsumerFunction<void, D>;
+	/**
+	 * If this is not a primitive type without type arguments.
+	 * @see {@link traverseTypeName}
+	 */
 	typeName?: TraverserFunction<D>;
+	/**
+	 * If this is a scoped type name.
+	 * @see {@link traverseScopedTypeName}
+	 */
 	scopedTypeName?: TraverserFunction<D>;
+	/**
+	 * If this is a type with generic arguments.
+	 * @see {@link traverseGenericType}
+	 */
 	genericType?: TraverserFunction<D>;
+	/**
+	 * The array type if this is an array.
+	 * @see {@link traverseArrayType}
+	 */
 	arrayType?: TraverserFunction<D>;
 }
 /**
@@ -121,4 +143,62 @@ export const traverseTypeList: <D>(traverser: TypeListTraverser<D>) => InlineTra
 		) return true;
 	} while (cursor.nextSibling());
 	return false;
+};
+
+export interface ArrayTypeTraverser<D> extends Traverser<TraverserError.SyntaxError, D> {
+	/**
+	 * The type of this array.
+	 * @see {@link traverseUnannotatedType}
+	 */
+	type?: TraverserFunction<D>,
+	/**
+	 * Dimensions of this array. Called once for every `[]`.
+	 * @see {@link traverseDimension}
+	 */
+	dimension?: TraverserFunction<D>,
+}
+/**
+ * Traverses a type.
+ * @see [java.grammar](https://github.com/lezer-parser/java/blob/805a2d827d8965759a8b01ce0a788dd6a9b1f570/src/java.grammar#L585)
+ * @param traverser Used traverser
+ * @typeparam D Data type
+ * @returns A callable traverser function
+ */
+export const traverseArrayType: <D>(traverser: ArrayTypeTraverser<D>) => TraverserFunction<D> = traverser => (cursor, data) => {
+	assert.equals(cursor.node.name, "ArrayType", () => "Unexpected node: " + cursor.node.name);
+	cursor.firstChild();
+	traverser.type?.(cursor, data);
+	if (traverser.dimension)
+		while (cursor.nextSibling() && cursor.node.name === "Dimension") {
+			traverser.dimension(cursor, data);
+		}
+	syntaxErrorInline(traverser, cursor, data);
+	cursor.parent();
+};
+
+export interface DimensionTraverser<D> extends Traverser<TraverserError.SyntaxError, D> {
+	/**
+	 * Annotations for this array dimension.
+	 * @see {@link traverseAnnotation}
+	 */
+	annotation: TraverserFunction<D>,
+}
+/**
+ * Traverses a type.
+ * @see [java.grammar](https://github.com/lezer-parser/java/blob/805a2d827d8965759a8b01ce0a788dd6a9b1f570/src/java.grammar#L167)
+ * @param traverser Used traverser
+ * @typeparam D Data type
+ * @returns A callable traverser function
+ */
+export const traverseDimension: <D>(traverser: DimensionTraverser<D>) => TraverserFunction<D> = traverser => (cursor, data) => {
+	assert.equals(cursor.node.name, "Dimension", () => "Unexpected node: " + cursor.node.name);
+	cursor.firstChild();
+	do {
+		if (syntaxErrorInline(traverser, cursor, data))
+			break;
+		if (!cursor.node.name.endsWith("Annotation"))
+			break;
+		traverser.annotation(cursor, data);
+	} while (cursor.nextSibling())
+	cursor.parent();
 };
