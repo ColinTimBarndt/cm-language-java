@@ -42,6 +42,8 @@ export * as traverser from "./traverse/traverser";
  */
 export * as outliner from "./outline/outliner";
 
+export * as linter from "./linter/linter";
+
 /**
  * Creates a new extension for java language support.
  * @returns The Java language support extension
